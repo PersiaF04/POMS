@@ -4,6 +4,7 @@ import CitiButton from '../Components/CitiButton';
 import CitiTable from '../Components/CitiTable';
 import CitiTextBox from '../Components/CitiTextBox';
 import FinancialNews from '../Components/CitiFinancialNews';
+import NewsTicker from '../Components/NewsTicker';
 
 function HomePage() {
   // Live stocks data will be fetched via Finnhub API
@@ -72,6 +73,7 @@ function HomePage() {
   }, []);
 
   return (
+    <><NewsTicker />
     <div className="main-layout">
       {/* Left column: Commodities */}
       <div className="side-column">
@@ -118,7 +120,7 @@ function HomePage() {
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   );
 }
 
