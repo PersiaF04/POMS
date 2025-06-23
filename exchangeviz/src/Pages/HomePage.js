@@ -66,7 +66,20 @@ function HomePage() {
         }
       }
     }
+
+    // Update the table immediately
     setBidAskData(updatedData);
+
+    // Remove rows with Volume = 0 after 2 seconds
+    setTimeout(() => {
+      const filteredData = updatedData.filter(row => row.Volume > 0);
+      setBidAskData(filteredData);
+    }, 2000);
+  };
+
+  const matchedRowStyle = {
+    backgroundColor: 'green',
+    color: 'white',
   };
 
   return (
@@ -91,7 +104,7 @@ function HomePage() {
               <CitiTable
                 data={bidData.map(row => ({
                   ...row,
-                  className: row.Matched ? 'matched-row' : '',
+                  style: row.Matched ? matchedRowStyle : {},
                 }))}
                 columns={bidAskDisplayColumns}
               />
@@ -101,7 +114,7 @@ function HomePage() {
               <CitiTable
                 data={askData.map(row => ({
                   ...row,
-                  className: row.Matched ? 'matched-row' : '',
+                  style: row.Matched ? matchedRowStyle : {},
                 }))}
                 columns={bidAskDisplayColumns}
               />
