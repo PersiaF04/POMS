@@ -12,7 +12,10 @@ function CitiTable({ data, columns }) {
       </thead>
       <tbody>
         {data.map((row, idx) => (
-          <tr key={idx}>
+          <tr
+            key={idx}
+            style={row.style} // Apply the style passed from HomePage
+          >
             {columns.map((col, index) => (
               <td key={index} style={{ color: "var(--citi-dark-blue)" }}>
                 {row[col]}
