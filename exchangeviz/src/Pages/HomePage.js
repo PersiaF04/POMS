@@ -5,13 +5,6 @@ import CitiTable from '../Components/CitiTable';
 import CitiTextBox from '../Components/CitiTextBox';
 
 function HomePage() {
-  const sampleData = [
-    { Bid: 1, Ask: 'Item One' },
-    { Bid: 2, Ask: 'Item Two' },
-    { Bid: 3, Ask: 'Item Three' },
-  ];
-  const columns = ['Side', 'Price', 'Volume', 'Time'];
-
   const stocksData = [
     { Symbol: 'AAPL', Price: '$150' },
     { Symbol: 'GOOGL', Price: '$2800' },
@@ -40,8 +33,10 @@ function HomePage() {
     { Side: 'Ask', Price: '135.70', Volume: 80,  Time: '14:30:17' },
     { Side: 'Ask', Price: '135.72', Volume: 30,  Time: '14:30:18' },
   ];
-  // Columns corresponding to the keys in bidAskData
+  // Full columns (if needed):
   const bidAskColumns = ['Side', 'Price', 'Volume', 'Time'];
+  // For display, remove the "Side" column:
+  const bidAskDisplayColumns = ['Price', 'Volume', 'Time'];
 
   // Filter the data into bids and asks
   const bidData = bidAskData.filter(row => row.Side === 'Bid');
@@ -49,27 +44,29 @@ function HomePage() {
 
   return (
     <div className="main-layout">
+      {/* Existing left column (e.g., Commodities) */}
       <div className="side-column">
         <div className="commodities-table-wrapper side-wrapper">
           <h2 className="side-title">Commodities</h2>
           <CitiTable data={commoditiesData} columns={commoditiesColumns} />
         </div>
       </div>
+
+      {/* Central container with bid and ask tables displayed side by side */}
       <div className="center-column">
         <div className="citi-container">
           <h1 className="citi-header">Exchange Viz</h1>
           <CitiButton onClick={() => alert('Button clicked!')}>FIFO</CitiButton>
           <CitiButton onClick={() => alert('Button clicked!')}>Pro-rata</CitiButton>
 
-          {/* Side by side bid and ask tables */}
           <div className="bid-ask-tables-container">
             <div className="bid-table-wrapper">
               <h2 style={{ color: "var(--citi-dark-blue)" }}>Bid Orders</h2>
-              <CitiTable data={bidData} columns={bidAskColumns} />
+              <CitiTable data={bidData} columns={bidAskDisplayColumns} />
             </div>
             <div className="ask-table-wrapper">
               <h2 style={{ color: "var(--citi-dark-blue)" }}>Ask Orders</h2>
-              <CitiTable data={askData} columns={bidAskColumns} />
+              <CitiTable data={askData} columns={bidAskDisplayColumns} />
             </div>
           </div>
 
@@ -78,6 +75,8 @@ function HomePage() {
           <CitiButton onClick={() => alert('Button clicked!')}>Add Ask</CitiButton>
         </div>
       </div>
+
+      {/* Existing right column (e.g., Stocks and News) */}
       <div className="side-column">
         <div className="stocks-table-wrapper side-wrapper">
           <h2 className="side-title">Stocks</h2>
