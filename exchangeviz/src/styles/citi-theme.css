@@ -143,6 +143,29 @@ body {
   border-radius: 4px;
 }
 
+
+.table{
+   overflow-y:scroll;
+   height:100px;
+   display:block;
+}
+
+/* Removes default spacing that causes the gap */
+.scrollable-table {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Sticky header fix */
+.scrollable-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #0033a0; 
+  color: white;
+  z-index: 10;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
 .bid-ask-tables-container {
   display: flex;
   justify-content: space-between;
@@ -154,3 +177,4 @@ body {
 .ask-table-wrapper {
   flex: 1;
 }
+

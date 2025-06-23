@@ -3,6 +3,8 @@ import '../styles/citi-theme.css';
 import CitiButton from '../Components/CitiButton';
 import CitiTable from '../Components/CitiTable';
 import CitiTextBox from '../Components/CitiTextBox';
+import { useState, useEffect } from 'react';
+import FinancialNews from '../Components/CitiFinancialNews';
 
 function HomePage() {
   const stocksData = [
@@ -19,12 +21,7 @@ function HomePage() {
   ];
   const commoditiesColumns = ['Commodity', 'Price'];
 
-  const newsData = [
-    { Headline: 'Market hits record high', Source: 'Reuters' },
-    { Headline: 'Tech stocks rally', Source: 'Bloomberg' },
-    { Headline: 'Economic outlook improves', Source: 'CNBC' },
-  ];
-  const newsColumns = ['Headline', 'Source'];
+
 
   // Example financial bid/ask data typical for a trading interface:
   const bidAskData = [
@@ -41,7 +38,7 @@ function HomePage() {
   // Filter the data into bids and asks
   const bidData = bidAskData.filter(row => row.Side === 'Bid');
   const askData = bidAskData.filter(row => row.Side === 'Ask');
-
+  
   return (
     <div className="main-layout">
       {/* Existing left column (e.g., Commodities) */}
@@ -78,17 +75,21 @@ function HomePage() {
 
       {/* Existing right column (e.g., Stocks and News) */}
       <div className="side-column">
-        <div className="stocks-table-wrapper side-wrapper">
+        <div className="stocks-table-wrapper side-wrapper ">
           <h2 className="side-title">Stocks</h2>
           <CitiTable data={stocksData} columns={stocksColumns} />
         </div>
         <div className="news-table-wrapper side-wrapper">
           <h2 className="side-title">News</h2>
-          <CitiTable data={newsData} columns={newsColumns} />
+          <div className='scrollable-table'>
+          <FinancialNews />
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+
 
 export default HomePage;
