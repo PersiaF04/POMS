@@ -112,3 +112,33 @@ body {
   margin-bottom: 1rem;
   text-align: center;
 }
+
+.citi-textbox-container {
+  background-color: var(--citi-light-blue);
+  border: 2px solid var(--citi-blue);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 2rem;    /* Add extra spacing above the textbox container */
+  margin-bottom: 2rem; /* Extra spacing below */
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.citi-input-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.citi-input-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--citi-dark-blue);
+}
+
+.citi-input {
+  padding: 0.5rem;
+  border: 1px solid var(--citi-blue);
+  border-radius: 4px;
+}

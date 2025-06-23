@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/citi-theme.css';
 import CitiButton from '../Components/CitiButton';
 import CitiTable from '../Components/CitiTable';
+import CitiTextBox from '../Components/CitiTextBox';
 
 function HomePage() {
   const sampleData = [
@@ -43,10 +44,10 @@ function HomePage() {
       <div className="center-column">
         <div className="citi-container">
           <h1 className="citi-header">Exchange Viz</h1>
-          <p className="citi-lead">Explore visualizations styled with Citi’s colour scheme.</p>
           <CitiButton onClick={() => alert('Button clicked!')}>FIFO</CitiButton>
           <CitiButton onClick={() => alert('Button clicked!')}>Pro-rata</CitiButton>
           <CitiTable data={sampleData} columns={columns} />
+          <CitiTextBox />
           <CitiButton onClick={() => alert('Button clicked!')}>Add Bid</CitiButton>
           <CitiButton onClick={() => alert('Button clicked!')}>Add Ask</CitiButton>
         </div>
