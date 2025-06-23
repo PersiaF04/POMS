@@ -142,3 +142,15 @@ body {
   border: 1px solid var(--citi-blue);
   border-radius: 4px;
 }
+
+.bid-ask-tables-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.bid-table-wrapper,
+.ask-table-wrapper {
+  flex: 1;
+}
