@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/citi-theme.css';
 import CitiButton from '../Components/CitiButton';
 import CitiTable from '../Components/CitiTable';
 import CitiTextBox from '../Components/CitiTextBox';
-import { useState, useEffect } from 'react';
 import FinancialNews from '../Components/CitiFinancialNews';
 import NewsTicker from '../Components/NewsTicker';
 
@@ -22,24 +21,29 @@ function HomePage() {
   ];
   const commoditiesColumns = ['Commodity', 'Price'];
 
+  const [volume, setVolume] = useState('');
+  const [price, setPrice] = useState('');
+  const [time, setTime] = useState('');
+  const [bidAskData, setBidAskData] = useState([
+  ]);
 
-
-  // Example financial bid/ask data typical for a trading interface:
-  const bidAskData = [
-    { Side: 'Bid', Price: '135.67', Volume: 100, Time: '14:30:15' },
-    { Side: 'Bid', Price: '135.65', Volume: 50,  Time: '14:30:16' },
-    { Side: 'Ask', Price: '135.70', Volume: 80,  Time: '14:30:17' },
-    { Side: 'Ask', Price: '135.72', Volume: 30,  Time: '14:30:18' },
-  ];
-  // Full columns (if needed):
-  const bidAskColumns = ['Side', 'Price', 'Volume', 'Time'];
-  // For display, remove the "Side" column:
   const bidAskDisplayColumns = ['Price', 'Volume', 'Time'];
 
-  // Filter the data into bids and asks
   const bidData = bidAskData.filter(row => row.Side === 'Bid');
   const askData = bidAskData.filter(row => row.Side === 'Ask');
-  
+
+  const addOrder = (side) => {
+    if (volume && price && time) {
+      const newOrder = { Side: side, Price: price, Volume: parseInt(volume, 10), Time: time };
+      setBidAskData([...bidAskData, newOrder]);
+      setVolume('');
+      setPrice('');
+      setTime('');
+    } else {
+      alert('Please fill in all fields.');
+    }
+  };
+
   return (
     <><NewsTicker />
     <div className="main-layout">
@@ -69,9 +73,40 @@ function HomePage() {
             </div>
           </div>
 
-          <CitiTextBox />
-          <CitiButton onClick={() => alert('Button clicked!')}>Add Bid</CitiButton>
-          <CitiButton onClick={() => alert('Button clicked!')}>Add Ask</CitiButton>
+          <div className="citi-textbox-container">
+            <div className="citi-input-group">
+              <label htmlFor="volume">Volume</label>
+              <input
+                id="volume"
+                type="text"
+                className="citi-input"
+                value={volume}
+                onChange={(e) => setVolume(e.target.value)}
+              />
+            </div>
+            <div className="citi-input-group">
+              <label htmlFor="price">Price</label>
+              <input
+                id="price"
+                type="text"
+                className="citi-input"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </div>
+            <div className="citi-input-group">
+              <label htmlFor="time">Time</label>
+              <input
+                id="time"
+                type="text"
+                className="citi-input"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+              />
+            </div>
+          </div>
+          <CitiButton onClick={() => addOrder('Bid')}>Add Bid</CitiButton>
+          <CitiButton onClick={() => addOrder('Ask')}>Add Ask</CitiButton>
         </div>
       </div>
 
@@ -86,7 +121,5 @@ function HomePage() {
     </div></>
   );
 }
-
-
 
 export default HomePage;
