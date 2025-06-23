@@ -10,13 +10,48 @@ function HomePage() {
   const [stocksData, setStocksData] = useState([]);
   const stocksColumns = ['Symbol', 'Price'];
 
-  // Other data remains static
-  const commoditiesData = [
-    { Commodity: 'Gold', Price: '$1800' },
-    { Commodity: 'Silver', Price: '$25' },
-    { Commodity: 'Oil', Price: '$70' },
-  ];
+  const [commoditiesData, setCommoditiesData] = useState([]);
   const commoditiesColumns = ['Commodity', 'Price'];
+  
+  useEffect(() => {
+
+    const fetchCommodityPrice = async (commodity, endpoint) => {
+      try {
+        const response = await fetch(endpoint, {
+          headers: {
+            'Authorization': 'Bearer YOUR_API_KEY',
+          },
+        });
+        const data = await response.json();
+        const rates = data.data?.rates ??data.rates; 
+        return { Commodity: commodity, Price: `$${Object.values(rates)[2]}` };
+
+
+      } catch (error) {
+        console.error(`Error fetching price for ${commodity}:`, error);
+        return { Commodity: commodity, Price: 'N/A' };
+      }
+    };
+
+    const fetchCommoditiesData = async () => {
+      const endpoints = [
+        {commodity: 'Ahmedabad Gold', endpoint: 'https://commodities-api.com/api/latest?access_key=nlkt12ilshvu0uz46bnc2jvo8a0t6dn2l9k11ykjs9jxc8576t0d8bed3zg1&base=USD&symbols=XAU-AHME'},
+        {commodity: 'Delhi Silver', endpoint: 'https://commodities-api.com/api/latest?access_key=nlkt12ilshvu0uz46bnc2jvo8a0t6dn2l9k11ykjs9jxc8576t0d8bed3zg1&base=USD&symbols=XAG-DELH'},
+        {commodity: 'London Gas Oil', endpoint: 'https://commodities-api.com/api/latest?access_key=nlkt12ilshvu0uz46bnc2jvo8a0t6dn2l9k11ykjs9jxc8576t0d8bed3zg1&base=USD&symbols=LGOU22'},
+      ];
+      
+      const results = await Promise.all(
+        endpoints.map(({commodity, endpoint}) =>
+          fetchCommodityPrice(commodity, endpoint)
+      )
+      );
+
+      setCommoditiesData(results);
+
+    };
+
+    fetchCommoditiesData();
+  }, []);
 
   const bidAskData = [
     { Side: 'Bid', Price: '135.67', Volume: 100, Time: '14:30:15' },
