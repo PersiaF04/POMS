@@ -143,6 +143,7 @@ body {
   border-radius: 4px;
 }
 
+
 .table{
    overflow-y:scroll;
    height:100px;
@@ -165,5 +166,15 @@ body {
   padding: 8px;
   border-bottom: 1px solid #ccc;
 }
+.bid-ask-tables-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 2rem;
+}
 
+.bid-table-wrapper,
+.ask-table-wrapper {
+  flex: 1;
+}
 
