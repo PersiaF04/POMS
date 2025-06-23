@@ -25,6 +25,10 @@ function HomePage() {
   const [price, setPrice] = useState('');
   const [time, setTime] = useState('');
   const [bidAskData, setBidAskData] = useState([
+    { Side: 'Bid', Price: '135.67', Volume: 100, Time: '14:30:15', Matched: false },
+    { Side: 'Bid', Price: '135.65', Volume: 50, Time: '14:30:16', Matched: false },
+    { Side: 'Ask', Price: '135.70', Volume: 80, Time: '14:30:17', Matched: false },
+    { Side: 'Ask', Price: '135.72', Volume: 30, Time: '14:30:18', Matched: false },
   ]);
 
   const bidAskDisplayColumns = ['Price', 'Volume', 'Time'];
@@ -34,7 +38,7 @@ function HomePage() {
 
   const addOrder = (side) => {
     if (volume && price && time) {
-      const newOrder = { Side: side, Price: price, Volume: parseInt(volume, 10), Time: time };
+      const newOrder = { Side: side, Price: price, Volume: parseInt(volume, 10), Time: time, Matched: false };
       setBidAskData([...bidAskData, newOrder]);
       setVolume('');
       setPrice('');
@@ -42,6 +46,27 @@ function HomePage() {
     } else {
       alert('Please fill in all fields.');
     }
+  };
+
+  const runMatching = () => {
+    const updatedData = [...bidAskData];
+    for (let i = 0; i < updatedData.length; i++) {
+      const bid = updatedData[i];
+      if (bid.Side === 'Bid' && !bid.Matched) {
+        for (let j = 0; j < updatedData.length; j++) {
+          const ask = updatedData[j];
+          if (ask.Side === 'Ask' && !ask.Matched && parseFloat(bid.Price) >= parseFloat(ask.Price)) {
+            const matchVolume = Math.min(bid.Volume, ask.Volume);
+            bid.Volume -= matchVolume;
+            ask.Volume -= matchVolume;
+            bid.Matched = true;
+            ask.Matched = true;
+            break;
+          }
+        }
+      }
+    }
+    setBidAskData(updatedData);
   };
 
   return (
@@ -59,17 +84,27 @@ function HomePage() {
       <div className="center-column">
         <div className="citi-container">
           <h1 className="citi-header">Exchange Viz</h1>
-          <CitiButton onClick={() => alert('Button clicked!')}>FIFO</CitiButton>
-          <CitiButton onClick={() => alert('Button clicked!')}>Pro-rata</CitiButton>
 
           <div className="bid-ask-tables-container">
             <div className="bid-table-wrapper">
               <h2 style={{ color: "var(--citi-dark-blue)" }}>Bid Orders</h2>
-              <CitiTable data={bidData} columns={bidAskDisplayColumns} />
+              <CitiTable
+                data={bidData.map(row => ({
+                  ...row,
+                  className: row.Matched ? 'matched-row' : '',
+                }))}
+                columns={bidAskDisplayColumns}
+              />
             </div>
             <div className="ask-table-wrapper">
               <h2 style={{ color: "var(--citi-dark-blue)" }}>Ask Orders</h2>
-              <CitiTable data={askData} columns={bidAskDisplayColumns} />
+              <CitiTable
+                data={askData.map(row => ({
+                  ...row,
+                  className: row.Matched ? 'matched-row' : '',
+                }))}
+                columns={bidAskDisplayColumns}
+              />
             </div>
           </div>
 
@@ -107,6 +142,8 @@ function HomePage() {
           </div>
           <CitiButton onClick={() => addOrder('Bid')}>Add Bid</CitiButton>
           <CitiButton onClick={() => addOrder('Ask')}>Add Ask</CitiButton>
+          <CitiButton onClick={runMatching}>Run</CitiButton>
+          
         </div>
       </div>
 
