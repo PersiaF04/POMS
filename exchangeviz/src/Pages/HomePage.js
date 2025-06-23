@@ -10,6 +10,7 @@ function HomePage() {
   const [stocksData, setStocksData] = useState([]);
   const stocksColumns = ['Symbol', 'Price'];
 
+  /*
   const [commoditiesData, setCommoditiesData] = useState([]);
   const commoditiesColumns = ['Commodity', 'Price'];
   
@@ -52,6 +53,16 @@ function HomePage() {
 
     fetchCommoditiesData();
   }, []);
+
+  */
+
+  const commoditiesData = [
+    { Commodity: 'Ahmedabad Gold', Price: '$3785' },
+    { Commodity: 'Delhi Silver', Price: '$36' },
+    { Commodity: 'London Gas Oil', Price: '$787' },
+  ];
+
+  const commoditiesColumns = ['Commodity', 'Price'];
 
   const [volume, setVolume] = useState('');
   const [price, setPrice] = useState('');
