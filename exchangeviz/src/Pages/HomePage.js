@@ -70,9 +70,14 @@ function HomePage() {
     // Update the table immediately
     setBidAskData(updatedData);
 
-    // Remove rows with Volume = 0 after 2 seconds
+    // Remove rows with Volume = 0 and reset Matched property after 2 seconds
     setTimeout(() => {
-      const filteredData = updatedData.filter(row => row.Volume > 0);
+      const filteredData = updatedData
+        .filter(row => row.Volume > 0) // Remove rows with Volume = 0
+        .map(row => ({
+          ...row,
+          Matched: false, // Reset Matched property
+        }));
       setBidAskData(filteredData);
     }, 2000);
   };
@@ -93,28 +98,27 @@ function HomePage() {
         </div>
       </div>
 
-      {/* Central container with bid and ask tables displayed side by side */}
       <div className="center-column">
         <div className="citi-container">
           <h1 className="citi-header">Exchange Viz</h1>
 
           <div className="bid-ask-tables-container">
             <div className="bid-table-wrapper">
-              <h2 style={{ color: "var(--citi-dark-blue)" }}>Bid Orders</h2>
+              <h2 style={{ color: 'var(--citi-dark-blue)' }}>Bid Orders</h2>
               <CitiTable
                 data={bidData.map(row => ({
                   ...row,
-                  style: row.Matched ? matchedRowStyle : {},
+                  style: row.Matched ? matchedRowStyle : {}, // Apply green styling if matched
                 }))}
                 columns={bidAskDisplayColumns}
               />
             </div>
             <div className="ask-table-wrapper">
-              <h2 style={{ color: "var(--citi-dark-blue)" }}>Ask Orders</h2>
+              <h2 style={{ color: 'var(--citi-dark-blue)' }}>Ask Orders</h2>
               <CitiTable
                 data={askData.map(row => ({
                   ...row,
-                  style: row.Matched ? matchedRowStyle : {},
+                  style: row.Matched ? matchedRowStyle : {}, // Apply green styling if matched
                 }))}
                 columns={bidAskDisplayColumns}
               />
@@ -156,7 +160,6 @@ function HomePage() {
           <CitiButton onClick={() => addOrder('Bid')}>Add Bid</CitiButton>
           <CitiButton onClick={() => addOrder('Ask')}>Add Ask</CitiButton>
           <CitiButton onClick={runMatching}>Run</CitiButton>
-          
         </div>
       </div>
 
