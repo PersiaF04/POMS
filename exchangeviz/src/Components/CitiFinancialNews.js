@@ -35,8 +35,7 @@ function FinancialNews() {
   const newsColumns = ['Headline', 'Source'];
 
   return (
-    <div className="news-table-wrapper side-wrapper">
-      <h2 className="side-title">News</h2>
+    <div>
       {loading ? <p>Loading news...</p> : <CitiTable data={titleLinks} columns={newsColumns} />}
     </div>
   );

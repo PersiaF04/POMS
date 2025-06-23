@@ -48,13 +48,15 @@ function HomePage() {
         </div>
       </div>
       <div className="side-column">
-        <div className="stocks-table-wrapper side-wrapper">
+        <div className="stocks-table-wrapper side-wrapper ">
           <h2 className="side-title">Stocks</h2>
           <CitiTable data={stocksData} columns={stocksColumns} />
         </div>
         <div className="news-table-wrapper side-wrapper">
           <h2 className="side-title">News</h2>
+          <div className='scrollable-table'>
           <FinancialNews />
+          </div>
         </div>
       </div>
     </div>
