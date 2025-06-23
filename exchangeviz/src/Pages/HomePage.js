@@ -3,6 +3,8 @@ import '../styles/citi-theme.css';
 import CitiButton from '../Components/CitiButton';
 import CitiTable from '../Components/CitiTable';
 import CitiTextBox from '../Components/CitiTextBox';
+import { useState, useEffect } from 'react';
+import FinancialNews from '../Components/CitiFinancialNews';
 
 function HomePage() {
   const sampleData = [
@@ -25,13 +27,6 @@ function HomePage() {
     { Commodity: 'Oil', Price: '$70' },
   ];
   const commoditiesColumns = ['Commodity', 'Price'];
-
-  const newsData = [
-    { Headline: 'Market hits record high', Source: 'Reuters' },
-    { Headline: 'Tech stocks rally', Source: 'Bloomberg' },
-    { Headline: 'Economic outlook improves', Source: 'CNBC' },
-  ];
-  const newsColumns = ['Headline', 'Source'];
 
   return (
     <div className="main-layout">
@@ -59,11 +54,13 @@ function HomePage() {
         </div>
         <div className="news-table-wrapper side-wrapper">
           <h2 className="side-title">News</h2>
-          <CitiTable data={newsData} columns={newsColumns} />
+          <FinancialNews />
         </div>
       </div>
     </div>
   );
 }
+
+
 
 export default HomePage;
