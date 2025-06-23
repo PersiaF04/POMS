@@ -5,6 +5,7 @@ import CitiTable from '../Components/CitiTable';
 import CitiTextBox from '../Components/CitiTextBox';
 import { useState, useEffect } from 'react';
 import FinancialNews from '../Components/CitiFinancialNews';
+import NewsTicker from '../Components/NewsTicker';
 
 function HomePage() {
   const stocksData = [
@@ -40,6 +41,7 @@ function HomePage() {
   const askData = bidAskData.filter(row => row.Side === 'Ask');
   
   return (
+    <><NewsTicker />
     <div className="main-layout">
       {/* Existing left column (e.g., Commodities) */}
       <div className="side-column">
@@ -82,11 +84,11 @@ function HomePage() {
         <div className="news-table-wrapper side-wrapper">
           <h2 className="side-title">News</h2>
           <div className='scrollable-table'>
-          <FinancialNews />
+            <FinancialNews />
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   );
 }
 
